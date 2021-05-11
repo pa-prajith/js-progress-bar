@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Bar</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .container {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .bar-container {
+        width: 40%;
+        height: 10vh;
+        border: 1px solid rgba(0, 0, 0, 0.6);
+        border-radius: 24px;
+      }
+
+      .bar {
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 0%;
+        border-radius: 24px;
+      }
+
+      .btn {
+        margin-top: 30px;
+        padding: 12px 24px;
+        border-radius: 24px;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: rgba(255, 255, 255);
+        text-transform: uppercase;
+        line-height: 1.2;
+        letter-spacing: 3px;
+        font-weight: 600;
+        font-size: 24px;
+        transition: all 500ms ease;
+      }
+
+      .btn:hover {
+        color: rgba(0, 0, 0, 0.9);
+        background-color: rgba(255, 255, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="bar-container">
+        <div class="bar"></div>
+      </div>
+      <div>
+        <button class="btn btn-js">JS</button>
+        <button class="btn btn-clear">Clear</button>
+        <button class="btn btn-css">CSS</button>
+      </div>
+    </div>
+    <script>
+      const btnJs = document.querySelector(".btn-js");
+      const btnCss = document.querySelector(".btn-css");
+      const btnClear = document.querySelector(".btn-clear");
+
+      function clickJsHandler(sec) {
+        const bar = document.querySelector(".bar");
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress++;
+          bar.style.width = progress + "%";
+          if (progress >= 100) {
+            clearInterval(interval);
+          }
+        }, (sec * 1000) / 100);
+      }
+
+      function clickCssHandler(sec) {
+        const bar = document.querySelector(".bar");
+        bar.style.width = "100%";
+        bar.style.transition = `linear ${sec}s width`;
+      }
+
+      btnJs.addEventListener("click", function () {
+        clickJsHandler(2);
+      });
+      btnClear.addEventListener("click", function () {
+        const bar = document.querySelector(".bar");
+        bar.style.width = "0%";
+      });
+      btnCss.addEventListener("click", function () {
+        clickCssHandler(2);
+      });
+    </script>
+  </body>
+</html>
